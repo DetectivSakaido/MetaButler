@@ -178,26 +178,6 @@ def leavechat(bot: Bot, update: Update, args: List[int]):
         else:
             return
 
-
-@run_async
-def slist(bot: Bot, update: Update):
-    message = update.effective_message
-    text1 = "My sudo users are:"
-    for user_id in SUDO_USERS:
-        try:
-            user = bot.get_chat(user_id)
-            name = "[{}](tg://user?id={})".format(
-                user.first_name + (user.last_name or ""), user.id)
-            if user.username:
-                name = escape_markdown("@" + user.username)
-            text1 += "\n - `{}`".format(name)
-        except BadRequest as excp:
-            if excp.message == 'Chat not found':
-                text1 += "\n - ({}) - not found".format(user_id)
-
-    message.reply_text(text1 + "\n", parse_mode=ParseMode.MARKDOWN)
-
-
 @run_async
 def chat_checker(bot: Bot, update: Update):
     if update.effective_message.chat.get_member(
@@ -216,16 +196,11 @@ def __stats__():
     return "• `{}` users, across `{}` chats".format(sql.num_users(),
                                                     sql.num_chats())
 
-
-def __gdpr__(user_id):
-    sql.del_user(user_id)
-
-
 def __migrate__(old_chat_id, new_chat_id):
     sql.migrate_chat(old_chat_id, new_chat_id)
 
 
-BROADCAST_HANDLER = CommandHandler("broadcasts",
+BROADCAST_HANDLER = CommandHandler("broadcast",
                                    broadcast,
                                    filters=Filters.user(OWNER_ID))
 USER_HANDLER = MessageHandler(Filters.all & Filters.group, log_user)
@@ -241,16 +216,12 @@ LEAVECHAT_HANDLER = CommandHandler("leavechat",
                                    leavechat,
                                    pass_args=True,
                                    filters=Filters.user(OWNER_ID))
-SLIST_HANDLER = CommandHandler("slist",
-                               slist,
-                               filters=CustomFilters.sudo_filter)
 CHAT_CHECKER_HANDLER = MessageHandler(Filters.all & Filters.group,
                                       chat_checker)
 
 dispatcher.add_handler(SNIPE_HANDLER)
 dispatcher.add_handler(GETLINK_HANDLER)
 dispatcher.add_handler(LEAVECHAT_HANDLER)
-dispatcher.add_handler(SLIST_HANDLER)
 dispatcher.add_handler(USER_HANDLER, USERS_GROUP)
 dispatcher.add_handler(BROADCAST_HANDLER)
 dispatcher.add_handler(CHAT_CHECKER_HANDLER, CHAT_GROUP)
