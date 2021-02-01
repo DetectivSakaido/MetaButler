@@ -12,7 +12,6 @@ from telegram.utils.helpers import escape_markdown, mention_html
 from telegram.error import BadRequest
 
 from metabutler import dispatcher, OWNER_ID, SUDO_USERS, WHITELIST_USERS
-#from metabutler.__main__ import GDPR
 from metabutler.__main__ import STATS, USER_INFO
 from metabutler.modules.disable import DisableAbleCommandHandler
 from metabutler.modules.helper_funcs.extraction import extract_user
@@ -117,18 +116,6 @@ def info(bot: Bot, update: Update, args: List[str]):
 
     update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
 
-
-#@run_async
-#def echo(bot: Bot, update: Update):
-#    message = update.effective_message
-#    message.delete()
-#    args = update.effective_message.text.split(None, 1)
-#    if message.reply_to_message:
-#        message.reply_to_message.reply_text(args[1])
-#    else:
-#        message.reply_text(args[1], quote=False)
-
-
 @run_async
 def reply_keyboard_remove(bot: Bot, update: Update):
     reply_keyboard = []
@@ -141,19 +128,6 @@ def reply_keyboard_remove(bot: Bot, update: Update):
         reply_to_message_id=update.message.message_id)
     bot.delete_message(chat_id=update.message.chat_id,
                        message_id=old_message.message_id)
-
-
-#@run_async
-#def gdpr(bot: Bot, update: Update):
-#    update.effective_message.reply_text(
-#        tld(update.effective_chat.id, "misc_gdpr"))
-#    for mod in GDPR:
-#        mod.__gdpr__(update.effective_user.id)
-#
-#    update.effective_message.reply_text(tld(update.effective_chat.id,
-#                                            "send_gdpr"),
-#                                        parse_mode=ParseMode.MARKDOWN)
-
 
 @run_async
 def markdown_help(bot: Bot, update: Update):
@@ -428,13 +402,11 @@ REPO_HANDLER = DisableAbleCommandHandler("repo",
                                          pass_args=True,
                                          admin_ok=True)
 
-#ECHO_HANDLER = CommandHandler("echo", echo, filters=Filters.user(OWNER_ID))
 MD_HELP_HANDLER = CommandHandler("markdownhelp",
                                  markdown_help,
                                  filters=Filters.private)
 
-STATS_HANDLER = CommandHandler("stats", stats, filters=Filters.user(OWNER_ID))
-#GDPR_HANDLER = CommandHandler("gdpr", gdpr, filters=Filters.private)
+STATS_HANDLER = CommandHandler("botstats", stats, filters=Filters.user(OWNER_ID))
 PASTE_HANDLER = DisableAbleCommandHandler("paste", paste, pass_args=True)
 GET_PASTE_HANDLER = DisableAbleCommandHandler("getpaste",
                                               get_paste_content,
@@ -452,10 +424,8 @@ dispatcher.add_handler(PASTE_STATS_HANDLER)
 dispatcher.add_handler(ID_HANDLER)
 dispatcher.add_handler(IP_HANDLER)
 dispatcher.add_handler(INFO_HANDLER)
-#dispatcher.add_handler(ECHO_HANDLER)
 dispatcher.add_handler(MD_HELP_HANDLER)
 dispatcher.add_handler(STATS_HANDLER)
-#dispatcher.add_handler(GDPR_HANDLER)
 dispatcher.add_handler(GITHUB_HANDLER)
 dispatcher.add_handler(REPO_HANDLER)
 dispatcher.add_handler(
