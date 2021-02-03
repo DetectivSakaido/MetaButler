@@ -1,1 +1,1 @@
-python3 -m metabutler
+python3.9 -m metabutler
