@@ -269,39 +269,39 @@ def reply_filter(bot: Bot, update: Update):
             break
 
 
-@run_async
-@user_admin
-def stop_all_filters(bot: Bot, update: Update):
-    chat = update.effective_chat
-    user = update.effective_user
-    message = update.effective_message
-
-    if chat.type == "private":
-        chat.title = tld(chat.id, "cust_filters_local")
-    else:
-        owner = chat.get_member(user.id)
-        chat.title = chat.title
-        if owner.status != 'creator':
-            message.reply_text(tld(chat.id, "notes_must_be_creator"))
-            return
-
-    x = 0
-    flist = sql.get_chat_triggers(chat.id)
-
-    if not flist:
-        message.reply_text(
-            tld(chat.id, "cust_filters_list_empty").format(chat.title))
-        return
-
-    f_flist = []
-    for f in flist:
-        x += 1
-        f_flist.append(f)
-
-    for fx in f_flist:
-        sql.remove_filter(chat.id, fx)
-
-    message.reply_text(tld(chat.id, "cust_filters_cleanup_success").format(x))
+#@run_async
+#@user_admin
+#def stop_all_filters(bot: Bot, update: Update):
+#    chat = update.effective_chat
+#    user = update.effective_user
+#    message = update.effective_message
+#
+#    if chat.type == "private":
+#        chat.title = tld(chat.id, "cust_filters_local")
+#    else:
+#        owner = chat.get_member(user.id)
+#        chat.title = chat.title
+#        if owner.status != 'creator':
+#            message.reply_text(tld(chat.id, "notes_must_be_creator"))
+#            return
+#
+#    x = 0
+#    flist = sql.get_chat_triggers(chat.id)
+#
+#    if not flist:
+#        message.reply_text(
+#            tld(chat.id, "cust_filters_list_empty").format(chat.title))
+#        return
+#
+#    f_flist = []
+#    for f in flist:
+#        x += 1
+#        f_flist.append(f)
+#
+#    for fx in f_flist:
+#        sql.remove_filter(chat.id, fx)
+#
+#    message.reply_text(tld(chat.id, "cust_filters_cleanup_success").format(x))
 
 
 def __stats__():
@@ -316,8 +316,8 @@ def __migrate__(old_chat_id, new_chat_id):
 __help__ = True
 
 FILTER_HANDLER = DisableAbleCommandHandler("filter", filters)
-STOP_HANDLER = DisableAbleCommandHandler("stop", stop_filter)
-STOPALL_HANDLER = DisableAbleCommandHandler("stopall", stop_all_filters)
+STOP_HANDLER = DisableAbleCommandHandler("stopfilter", stop_filter)
+#STOPALL_HANDLER = DisableAbleCommandHandler("stopall", stop_all_filters)
 LIST_HANDLER = DisableAbleCommandHandler("filters",
                                          list_handlers,
                                          admin_ok=True)
@@ -325,6 +325,6 @@ CUST_FILTER_HANDLER = MessageHandler(CustomFilters.has_text, reply_filter)
 
 dispatcher.add_handler(FILTER_HANDLER)
 dispatcher.add_handler(STOP_HANDLER)
-dispatcher.add_handler(STOPALL_HANDLER)
+#dispatcher.add_handler(STOPALL_HANDLER)
 dispatcher.add_handler(LIST_HANDLER)
 dispatcher.add_handler(CUST_FILTER_HANDLER, HANDLER_GROUP)
