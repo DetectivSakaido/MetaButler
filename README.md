@@ -1,5 +1,8 @@
 #MetaButler
 
+![](images/metabutler.jpg)
+
+
 MetaButler is an open source Telegram group manager bot, this is a modular based 
 Telegram Python Bot running on Python3 with sqlalchmey database.
 
