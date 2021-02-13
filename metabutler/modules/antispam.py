@@ -13,8 +13,8 @@ from metabutler import dispatcher, OWNER_ID, SUDO_USERS, STRICT_ANTISPAM, sw
 from metabutler.modules.helper_funcs.chat_status import user_admin, is_user_admin
 from metabutler.modules.helper_funcs.extraction import extract_user_and_text
 from metabutler.modules.helper_funcs.filters import CustomFilters
-#from metabutler.modules.helper_funcs.misc import send_to_list
-# from metabutler.modules.sql.users_sql import get_all_chats
+from metabutler.modules.helper_funcs.misc import send_to_list
+from metabutler.modules.sql.users_sql import get_all_chats
 
 from metabutler.modules.tr_engine.strings import tld
 
@@ -242,6 +242,18 @@ def check_and_ban(update, user_id, should_message=True):
     except Exception:
         pass
 
+    if sql.is_user_gbanned(user_id):
+        chat.kick_member(user_id)
+        if should_message:
+            userr = sql.get_gbanned_user(user_id)
+            usrreason = userr.reason
+            if not usrreason:
+                usrreason = tld(chat.id, "antispam_no_reason")
+
+            message.reply_text(tld(
+                chat.id, "antispam_checkban_user_removed").format(usrreason),
+                               parse_mode=ParseMode.MARKDOWN)
+            return
 
 @run_async
 def enforce_gban(bot: Bot, update: Update):

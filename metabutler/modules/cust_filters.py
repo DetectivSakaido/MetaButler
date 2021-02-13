@@ -201,7 +201,7 @@ def reply_filter(bot: Bot, update: Update):
     chat = update.effective_chat
     message = update.effective_message
 
-    if update.effective_user.id == 777000:
+    if not update.effective_user or  update.effective_user.id == 777000:
         return
 
     to_match = extract_text(message)
