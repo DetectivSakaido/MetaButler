@@ -2,9 +2,12 @@ import logging
 import sys
 import yaml
 import spamwatch
+import time
 
 from telethon import TelegramClient
 import telegram.ext as tg
+
+StartTime = time.time()
 
 #Enable logging
 logging.basicConfig(

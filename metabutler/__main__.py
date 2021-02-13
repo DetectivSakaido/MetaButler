@@ -3,6 +3,7 @@ from sys import argv
 import importlib
 import re
 from typing import List
+import time
 
 from telegram import Update, Bot
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
@@ -14,7 +15,7 @@ from telegram.ext.dispatcher import run_async, DispatcherHandlerStop, Dispatcher
 # Needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
 from metabutler.modules import ALL_MODULES
-from metabutler import dispatcher, updater, LOGGER, TOKEN, tbot
+from metabutler import dispatcher, updater, LOGGER, TOKEN, tbot, StartTime
 from metabutler.modules.helper_funcs.misc import paginate_modules
 from metabutler.modules.tr_engine.strings import tld
 
@@ -63,6 +64,31 @@ for module_name in ALL_MODULES:
         DATA_EXPORT.append(imported_module)
 
 
+def get_readable_time(seconds: int) -> str:
+    count = 0
+    ping_time = ""
+    time_list = []
+    time_suffix_list = ["s", "m", "h", "days"]
+
+    while count < 4:
+        count += 1
+        remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
+        if seconds == 0 and remainder == 0:
+            break
+        time_list.append(int(result))
+        seconds = int(remainder)
+
+    for x in range(len(time_list)):
+        time_list[x] = str(time_list[x]) + time_suffix_list[x]
+    if len(time_list) == 4:
+        ping_time += time_list.pop() + ", "
+
+    time_list.reverse()
+    ping_time += ":".join(time_list)
+
+    return ping_time
+
+
 # Do NOT async this!
 def send_help(chat_id, text, keyboard=None):
     if not keyboard:
@@ -88,6 +114,7 @@ def test(bot: Bot, update: Update):
 def start(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat
     # query = update.callback_query #Unused variable
+    uptime = get_readable_time((time.time() - StartTime))
     if update.effective_chat.type == "private":
         if len(args) >= 1:
             if args[0].lower() == "help":
