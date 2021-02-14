@@ -635,7 +635,13 @@ memes_help: |
   - /runs: reply a random string from an array of replies.
   - /insults: reply a random string from an array of replies.
   - /slap: slap a user, or get slapped if not a reply.
-
+memes_toss_list:
+  - "Heads"
+  - "Tails"
+memes_decide_list:
+  - "Yes."
+  - "No."
+  - "Maybe."
 #Misc
 modname_misc: Misc
 misc_get_id_1: The original sender, {}, has an ID of `{}`.\nThe forwarder, {}, has an ID of `{}`.

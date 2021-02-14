@@ -29,13 +29,33 @@ def insults(bot: Bot, update: Update):
     else:
         message.reply_text(text)
 
+@run_async
+def toss(bot: Bot, update: Update):
+    message = update.effective_message
+    chat = update.effective_chat
+    text = random.choice(tld_list(chat.id, "memes_toss_list"))
+
+    if message.reply_to_message:
+        message.reply_to_message.reply_text(text)
+    else:
+        message.reply_text(text)
+
+@run_async
+def decide(bot: Bot, update: Update):
+    message = update.effective_message
+    chat = update.effective_chat
+    text = random.choice(tld_list(chat.id, "memes_decide_list"))
+
+    if message.reply_to_message:
+        message.reply_to_message.reply_text(text)
+    else:
+        message.reply_text(text)
 
 @run_async
 def runs(bot: Bot, update: Update):
     chat = update.effective_chat
     update.effective_message.reply_text(
         random.choice(tld_list(chat.id, "memes_runs_list")))
-
 
 @run_async
 def slap(bot: Bot, update: Update, args: List[str]):
@@ -96,8 +116,11 @@ SLAP_HANDLER = DisableAbleCommandHandler("slap",
                                          slap,
                                          pass_args=True,
                                          admin_ok=True)
-
+TOSS_HANDLER = DisableAbleCommandHandler("toss", toss)
+DECIDE_HANDLER = DisableAbleCommandHandler("decide", decide)
 
 dispatcher.add_handler(INSULTS_HANDLER)
 dispatcher.add_handler(RUNS_HANDLER)
 dispatcher.add_handler(SLAP_HANDLER)
+dispatcher.add_handler(TOSS_HANDLER)
+dispatcher.add_handler(DECIDE_HANDLER)
