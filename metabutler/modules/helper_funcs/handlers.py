@@ -1,6 +1,6 @@
 import telegram.ext as tg
 from telegram import Update
-import metabutler.modules.sql.antispam_sql as sql
+import metabutler.modules.sql.global_bans_sql as sql
 
 CMD_STARTERS = ('/', '!')
 

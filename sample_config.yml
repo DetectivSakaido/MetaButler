@@ -10,7 +10,7 @@ owner_username: "OWNER USERNAME"
 message_dump: "CHAT ID"
 load: []
 no_load: []
-strict_antispam: False
+strict_gban: True
 workers: 4
 del_cmds: False
 sw_api: ''
@@ -21,3 +21,11 @@ database_url: "postgres://username:password@host:5432/database_name"
 # Permission
 sudo_users: []
 whitelist_users: []
+
+#sw
+SUPPORT_CHAT: 
+SPAMWATCH_SUPPORT_CHAT: "@SpamWatchSupport"
+
+EVENT_LOGS:
+
+

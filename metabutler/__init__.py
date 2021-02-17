@@ -75,15 +75,16 @@ DB_URI = CONFIG['database_url']
 LOAD = CONFIG['load']
 NO_LOAD = CONFIG['no_load']
 DEL_CMDS = CONFIG['del_cmds']
-STRICT_ANTISPAM = CONFIG['strict_antispam']
+STRICT_GBAN = CONFIG['strict_gban']
 WORKERS = CONFIG['workers']
-
+EVENT_LOGS = CONFIG['EVENT_LOGS']
+SUPPORT_CHAT = CONFIG['SUPPORT_CHAT']
 # Append OWNER_ID to SUDO_USERS
 SUDO_USERS.add(OWNER_ID)
 
 # SpamWatch
 spamwatch_api = CONFIG['sw_api']
-
+SPAMWATCH_SUPPORT_CHAT = CONFIG['SUPPORT_CHAT']
 if spamwatch_api == "None":
     sw = None
     LOGGER.warning("SpamWatch API key is missing! Check your config.env.")
