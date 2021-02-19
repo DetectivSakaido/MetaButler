@@ -15,6 +15,7 @@ from metabutler import SUDO_USERS, EVENT_LOGS, OWNER_ID, STRICT_GBAN, SUPPORT_CH
 from metabutler.modules.helper_funcs.chat_status import is_user_admin, user_admin
 from metabutler.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from metabutler.modules.helper_funcs.misc import send_to_list
+from metabutler.modules.tr_engine.strings import tld
 
 GBAN_ENFORCE_GROUP = 6
 
