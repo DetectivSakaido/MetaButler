@@ -57,38 +57,34 @@ def gban(bot: Bot, update: Update, args: List[str]):
     user_id, reason = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text(
-            "You don't seem to be referring to a user or the ID specified is incorrect.."
-        )
+        message.reply_text(tld(chat.id, "common_err_no_user"))
         return
 
     if user_id == bot.id:
-        message.reply_text("Why not I Gban You")
+        message.reply_text(tld(chat.id, "antispam_err_usr_bot"))
         return
 
     if user_id in [777000, 1087968824]:
-        message.reply_text("Oh No! No No No......")
+        message.reply_text(tld(chat.id, "antisoam_err_tg_support"))
         return
 
     try:
         user_chat = bot.get_chat(user_id)
     except BadRequest as excp:
         if excp.message == "User not found":
-            message.reply_text("I can't seem to find this user.")
+            message.reply_text(tld(chat.id, "antispam_err_notfound_usr"))
             return ""
         else:
             return
 
     if user_chat.type != "private":
-        message.reply_text("That's not a user!")
+        message.reply_text(tld(chat.id, "antispam_err_not_usr"))
         return
 
     if sql.is_user_gbanned(user_id):
 
         if not reason:
-            message.reply_text(
-                "This user is already gbanned; I'd change the reason, but you haven't given me one..."
-            )
+            message.reply_text(tld(chat.id, "antispam_err_no_new_reason"))
             return
 
         old_reason = sql.update_gban_reason(
@@ -194,7 +190,6 @@ def gban(bot: Bot, update: Update, args: List[str]):
     else:
         send_to_list(
             bot,
-            DRAGONS + DEMONS,
             f"Gban complete! (User banned in <code>{gbanned_chats}</code> chats)",
             html=True,
         )

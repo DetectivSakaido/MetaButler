@@ -104,9 +104,9 @@ android_help: |
   - /magisk: Get latest Magisk releases
 #Antiflood
 modname_antiflood: Antiflood
-flood_mute: I would like to leave the flooding to natural disasters. But you, you were just a disappointment. *Muted*!
+flood_mute: I would like to leave the flooding to natural disasters. But you, you were just a disappointment.\n{}!
 flood_err_no_perm: I can't mute people here, give me permissions first! Until then, I'll disable antiflood.
-flood_logger_success: '<b>{}:</b>\n#MUTED\n<b>User:</b> {}\nFlooded the group.'
+flood_logger_success: '<b>{}:</b>\n#{}\n<b>User:</b> {}\nFlooded the group.'
 flood_logger_fail: '<b>{}:</b>\n#INFO\nNo mute permissions! Antiflood disabled'
 flood_logger_set_off: '<b>{}:</b>\n#SETFLOOD\n<b>Admin:</b> {}\nDisabled antiflood.'
 flood_logger_set_on: '<b>{}:</b>\n#SETFLOOD\n<b>Admin:</b> {}\nSet antiflood to <code>{}</code>.'
@@ -116,6 +116,8 @@ flood_status_off: I'm not currently enforcing flood control!
 flood_status_on: I'm currently muting users if they send more than {} consecutive messages.
 flood_err_num: Antiflood has to be either 0 (disabled), or a number bigger than 3 (enabled)!
 flood_err_args: Unrecognized argument - please use a number, 'off', or 'no'.
+flood_err_time: It looks like you tried to set time value for antiflood but you didn't specified time; Try, `/setfloodmode tban <timevalue>`.Examples of time value- 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.
+flood_exceed_limit: Exceeding consecutive flood limit will result in {}!
 antiflood_help: |
   You know how sometimes people join, send 100 messages, and ruin your chat? With antiflood, that happens no more!\n
   Antiflood allows you to take action on users that send more than **x** messages in a row.\n
@@ -130,8 +132,15 @@ antiflood_help: |
   `6h` = 6 hours
   `3d` = 3 days
   `1w` = 1 week
+
 #Antispam
 modname_global_bans: Antispam
+antispam_err_usr_bot: -_- So funny, let me gban myself, why don''t I? Nice try.
+antisoam_err_tg_support: Oh No! No No No......
+antispam_err_notfound_usr: Cant find that user in my database!
+antispam_err_not_usr: That's not a user!
+antispam_err_no_new_reason: This user is already gbanned; I'd change the reason, but you haven't given me one...
+
 global_bans_help: |
   Antispam is used by the bot owners to ban spammers across all groups. This helps protect you and your groups by removing spam flooders as quickly as possible. This is enabled by default, but you can change this by using the command.\n
   *Admin only:*
