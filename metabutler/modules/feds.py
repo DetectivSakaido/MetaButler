@@ -42,7 +42,7 @@ UNFBAN_ERRORS = {
 def new_fed(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat
     user = update.effective_user
-    message = update.effective_message
+    #message = update.effective_message
     if chat.type != "private":
         update.effective_message.reply_text(tld(chat.id, "common_cmd_pm_only"))
         return
@@ -108,17 +108,25 @@ def del_fed(bot: Bot, update: Update, args: List[str]):
         update.effective_message.reply_text(tld(chat.id, "feds_owner_only"))
         return
 
-    update.effective_message.reply_text(
-        "feds_delete_confirm".format(getinfo['fname']),
-        reply_markup=InlineKeyboardMarkup([[
-            InlineKeyboardButton(text="⚠️ Delete Federation ⚠️",
-                                 callback_data="rmfed_{}".format(fed_id))
-        ], [InlineKeyboardButton(text="Cancel",
-                                 callback_data="rmfed_cancel")]]))
+    update.effective_message.reply_text(tld(chat.id, "feds_delete_confirm").format(getinfo['fname']
+                                                                                   ),
+                                        reply_markup=InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text="⚠️ Delete Federation ⚠️",
+                    callback_data="rmfed_{}".format(fed_id),
+                )
+            ],
+            [InlineKeyboardButton(
+                text="Cancel", callback_data="rmfed_cancel")],
+        ]
+    ),
+    )
 
 
 @run_async
-#@user_admin
+# @user_admin
 def fed_chat(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat
     fed_id = sql.get_fed_id(chat.id)
@@ -479,15 +487,16 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
                 pass
 
         send_to_list(bot, FEDADMIN,
-           "<b>FedBan reason updated</b>" \
-              "\n<b>Federation:</b> {}" \
-              "\n<b>Federation Admin:</b> {}" \
-              "\n<b>User:</b> {}" \
-              "\n<b>User ID:</b> <code>{}</code>" \
-              "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name),
-                  mention_html(user_chat.id, user_chat.first_name),
-                   user_chat.id, reason),
-          html=True)
+                     "<b>FedBan reason updated</b>"
+                     "\n<b>Federation:</b> {}"
+                     "\n<b>Federation Admin:</b> {}"
+                     "\n<b>User:</b> {}"
+                     "\n<b>User ID:</b> <code>{}</code>"
+                     "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name),
+                                                  mention_html(
+                                                      user_chat.id, user_chat.first_name),
+                                                  user_chat.id, reason),
+                     html=True)
         message.reply_text("FedBan reason has been updated.")
         return
 
@@ -530,15 +539,16 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
             pass
 
     send_to_list(bot, FEDADMIN,
-       "<b>New FedBan</b>" \
-       "\n<b>Federation:</b> {}" \
-       "\n<b>Federation Admin:</b> {}" \
-       "\n<b>User:</b> {}" \
-       "\n<b>User ID:</b> <code>{}</code>" \
-       "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name),
-              mention_html(user_chat.id, user_chat.first_name),
-               user_chat.id, reason),
-      html=True)
+                 "<b>New FedBan</b>"
+                 "\n<b>Federation:</b> {}"
+                 "\n<b>Federation Admin:</b> {}"
+                 "\n<b>User:</b> {}"
+                 "\n<b>User ID:</b> <code>{}</code>"
+                 "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name),
+                                              mention_html(
+                                                  user_chat.id, user_chat.first_name),
+                                              user_chat.id, reason),
+                 html=True)
     message.reply_text("This person has been fbanned")
 
 
@@ -739,13 +749,12 @@ def fed_chats(bot: Bot, update: Update, args: List[str]):
             update.effective_message.reply_document(
                 document=output,
                 filename="fbanlist.txt",
-                caption=
-                "Here is a list of all the chats that joined the federation {}."
+                caption="Here is a list of all the chats that joined the federation {}."
                 .format(info['fname']))
 
 
 @run_async
-def del_fed_button(bot, update):
+def del_fed_button(bot: Bot, update: Update):
     query = update.callback_query
     fed_id = query.data.split("_")[1]
 

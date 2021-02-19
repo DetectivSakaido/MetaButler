@@ -95,6 +95,12 @@ def get_fed_info(fed_id):
         return False
     return get
 
+def get_fed_name(chat_id):
+    get = FEDERATION_CHATS.get(str(chat_id))
+    if get is None:
+        return False
+    else:
+        return get["chat_name"]
 
 def get_fed_id(chat_id):
     get = FEDERATION_CHATS.get(str(chat_id))
@@ -187,8 +193,10 @@ def del_fed(fed_id):
                 if banlist:
                     SESSION.delete(banlist)
                     SESSION.commit()
-        FEDERATION_BANNED_USERID.pop(fed_id)
-        FEDERATION_BANNED_FULL.pop(fed_id)
+        if FEDERATION_BANNED_USERID.get(fed_id):
+           FEDERATION_BANNED_USERID.pop(fed_id)
+        if FEDERATION_BANNED_FULL.get(fed_id):
+           FEDERATION_BANNED_FULL.pop(fed_id)
         # Delete from database
         curr = SESSION.query(Federations).get(fed_id)
         if curr:
