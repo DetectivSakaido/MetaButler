@@ -708,51 +708,6 @@ def fed_notif(bot: Bot, update: Update, args: List[str]):
                 getreport),
             parse_mode="markdown")
 
-
-@run_async
-def fed_chats(bot: Bot, update: Update, args: List[str]):
-    chat = update.effective_chat
-    user = update.effective_user
-    fed_id = sql.get_fed_id(chat.id)
-    info = sql.get_fed_info(fed_id)
-
-    if not fed_id:
-        update.effective_message.reply_text(
-            "This group is not a part of any federation!")
-        return
-
-    if is_user_fed_admin(fed_id, user.id) == False:
-        update.effective_message.reply_text(
-            "Only federation admins can do this!")
-        return
-
-    getlist = sql.all_fed_chats(fed_id)
-    if len(getlist) == 0:
-        update.effective_message.reply_text(
-            "No users are fbanned from the federation {}".format(
-                info['fname']),
-            parse_mode=ParseMode.HTML)
-        return
-
-    text = "<b>New chat joined the federation {}:</b>\n".format(info['fname'])
-    for chats in getlist:
-        chat_name = sql.get_fed_name(chats)
-        text += " • {} (<code>{}</code>)\n".format(chat_name, chats)
-
-    try:
-        update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
-    except Exception:
-        cleanr = re.compile('<.*?>')
-        cleantext = re.sub(cleanr, '', text)
-        with BytesIO(str.encode(cleantext)) as output:
-            output.name = "fbanlist.txt"
-            update.effective_message.reply_document(
-                document=output,
-                filename="fbanlist.txt",
-                caption="Here is a list of all the chats that joined the federation {}."
-                .format(info['fname']))
-
-
 @run_async
 def del_fed_button(bot: Bot, update: Update):
     query = update.callback_query
@@ -772,54 +727,66 @@ def del_fed_button(bot: Bot, update: Update):
                 parse_mode='markdown')
 
 @run_async
-def get_myfedsubs(bot: Bot, update: Update, args: List[str]):
+def fed_chats(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat
     user = update.effective_user
-    #msg = update.effective_message
 
     if chat.type == "private":
         send_message(
             update.effective_message,
-            "This command is specific to the group, not to bot pm!",
+            "This command is specific to the group, not to our pm!",
         )
         return
 
     fed_id = sql.get_fed_id(chat.id)
-    fedinfo = sql.get_fed_info(fed_id)
+    info = sql.get_fed_info(fed_id)
 
     if not fed_id:
-        send_message(update.effective_message, "This group is not in any federation!")
+        update.effective_message.reply_text(
+            "This group is not a part of any federation!"
+        )
         return
 
-    if is_user_fed_owner(fed_id, user.id) is False:
-        send_message(update.effective_message, "Only fed owner can do this!")
+    if is_user_fed_admin(fed_id, user.id) is False:
+        update.effective_message.reply_text("Only federation admins can do this!")
         return
+
+    getlist = sql.all_fed_chats(fed_id)
+    if len(getlist) == 0:
+        update.effective_message.reply_text(
+            "No users are fbanned from the federation {}".format(info["fname"]),
+            parse_mode=ParseMode.HTML,
+        )
+        return
+
+    text = "<b>New chat joined the federation {}:</b>\n".format(info["fname"])
+    for chats in getlist:
+        try:
+            chat_name = dispatcher.bot.getChat(chats).title
+        except Unauthorized:
+            sql.chat_leave_fed(chats)
+            LOGGER.info(
+                "Chat {} has leave fed {} because I was kicked".format(
+                    chats, info["fname"]
+                )
+            )
+            continue
+        text += " • {} (<code>{}</code>)\n".format(chat_name, chats)
 
     try:
-        getmy = sql.get_mysubs(fed_id)
+        update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
     except:
-        getmy = []
-
-    if len(getmy) == 0:
-        send_message(
-            update.effective_message,
-            "Federation `{}` is not subscribing any federation.".format(
-                fedinfo["fname"]
-            ),
-            parse_mode="markdown",
-        )
-        return
-    else:
-        listfed = "Federation `{}` is subscribing federation:\n".format(
-            fedinfo["fname"]
-        )
-        for x in getmy:
-            listfed += "- `{}`\n".format(x)
-        listfed += (
-            "\nTo get fed info `/fedinfo <fedid>`. To unsubscribe `/unsubfed <fedid>`."
-        )
-        send_message(update.effective_message, listfed, parse_mode="markdown")
-
+        cleanr = re.compile("<.*?>")
+        cleantext = re.sub(cleanr, "", text)
+        with BytesIO(str.encode(cleantext)) as output:
+            output.name = "fedchats.txt"
+            update.effective_message.reply_document(
+                document=output,
+                filename="fedchats.txt",
+                caption="Here is a list of all the chats that joined the federation {}.".format(
+                    info["fname"]
+                ),
+            )
 
 @run_async
 def get_myfeds_list(bot: Bot, update: Update):
@@ -948,7 +915,6 @@ FED_CHAT_HANDLER = CommandHandler("chatfed", fed_chat, pass_args=True)
 FED_ADMIN_HANDLER = CommandHandler("fedadmins", fed_admin, pass_args=True)
 FED_NOTIF_HANDLER = CommandHandler("fednotif", fed_notif, pass_args=True)
 FED_CHATLIST_HANDLER = CommandHandler("fedchats", fed_chats, pass_args=True)
-MY_SUB_FED = CommandHandler("fedsubs", get_myfedsubs, pass_args=True)
 MY_FEDS_LIST = CommandHandler("myfeds", get_myfeds_list)
 DELETEBTN_FED_HANDLER = CallbackQueryHandler(del_fed_button, pattern=r"rmfed_")
 
@@ -966,7 +932,6 @@ dispatcher.add_handler(FED_GET_RULES_HANDLER)
 dispatcher.add_handler(FED_CHAT_HANDLER)
 dispatcher.add_handler(FED_ADMIN_HANDLER)
 # dispatcher.add_handler(FED_NOTIF_HANDLER)
-# dispatcher.add_handler(FED_CHATLIST_HANDLER)
-dispatcher.add_handler(MY_SUB_FED)
+dispatcher.add_handler(FED_CHATLIST_HANDLER)
 dispatcher.add_handler(MY_FEDS_LIST)
 dispatcher.add_handler(DELETEBTN_FED_HANDLER)

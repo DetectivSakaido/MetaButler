@@ -484,9 +484,6 @@ def get_all_feds_users_global():
         total.append(FEDERATION_BYFEDID[x])
     return total
 
-def get_mysubs(my_fed):
-    return list(MYFEDS_SUBSCRIBER.get(my_fed))
-
 def search_fed_by_id(fed_id):
     get = FEDERATION_BYFEDID.get(fed_id)
     if get == None:
