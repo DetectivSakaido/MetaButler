@@ -463,6 +463,12 @@ def get_all_fban_users_target(fed_id, user_id):
     getuser = list_fbanned[str(user_id)]
     return getuser
 
+def get_user_owner_fed_full(user_id):
+    user_feds = []
+    for f in FEDERATION_BYFEDID:
+        if int(user_id) == int(eval(FEDERATION_BYFEDID[f]["fusers"])["owner"]):
+            user_feds.append({"fed_id": f, "fed": FEDERATION_BYFEDID[f]})
+    return user_feds
 
 def get_all_fban_users_global():
     total = []

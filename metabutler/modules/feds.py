@@ -13,7 +13,7 @@ from metabutler.modules.helper_funcs.misc import send_to_list
 from metabutler.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from metabutler.modules.helper_funcs.string_handling import markdown_parser
 from metabutler.modules.disable import DisableAbleCommandHandler
-
+from metabutler.modules.helper_funcs.alternate import send_message
 import metabutler.modules.sql.feds_sql as sql
 
 from metabutler.modules.tr_engine.strings import tld
@@ -771,6 +771,71 @@ def del_fed_button(bot: Bot, update: Update):
                 .format(getfed['fname']),
                 parse_mode='markdown')
 
+@run_async
+def get_myfedsubs(bot: Bot, update: Update, args: List[str]):
+    chat = update.effective_chat
+    user = update.effective_user
+    #msg = update.effective_message
+
+    if chat.type == "private":
+        send_message(
+            update.effective_message,
+            "This command is specific to the group, not to bot pm!",
+        )
+        return
+
+    fed_id = sql.get_fed_id(chat.id)
+    fedinfo = sql.get_fed_info(fed_id)
+
+    if not fed_id:
+        send_message(update.effective_message, "This group is not in any federation!")
+        return
+
+    if is_user_fed_owner(fed_id, user.id) is False:
+        send_message(update.effective_message, "Only fed owner can do this!")
+        return
+
+    try:
+        getmy = sql.get_mysubs(fed_id)
+    except:
+        getmy = []
+
+    if len(getmy) == 0:
+        send_message(
+            update.effective_message,
+            "Federation `{}` is not subscribing any federation.".format(
+                fedinfo["fname"]
+            ),
+            parse_mode="markdown",
+        )
+        return
+    else:
+        listfed = "Federation `{}` is subscribing federation:\n".format(
+            fedinfo["fname"]
+        )
+        for x in getmy:
+            listfed += "- `{}`\n".format(x)
+        listfed += (
+            "\nTo get fed info `/fedinfo <fedid>`. To unsubscribe `/unsubfed <fedid>`."
+        )
+        send_message(update.effective_message, listfed, parse_mode="markdown")
+
+
+@run_async
+def get_myfeds_list(bot: Bot, update: Update):
+    chat = update.effective_chat
+    user = update.effective_user
+    msg = update.effective_message
+
+    fedowner = sql.get_user_owner_fed_full(user.id)
+    if fedowner:
+        text = "*You are owner of feds:\n*"
+        for f in fedowner:
+            text += "- `{}`: *{}*\n".format(f["fed_id"], f["fed"]["fname"])
+    else:
+        text = "*You are not have any feds!*"
+    send_message(update.effective_message, text, parse_mode="markdown")
+
 
 def is_user_fed_admin(fed_id, user_id):
     feds_admins = sql.all_fed_users(fed_id)
@@ -883,7 +948,8 @@ FED_CHAT_HANDLER = CommandHandler("chatfed", fed_chat, pass_args=True)
 FED_ADMIN_HANDLER = CommandHandler("fedadmins", fed_admin, pass_args=True)
 FED_NOTIF_HANDLER = CommandHandler("fednotif", fed_notif, pass_args=True)
 FED_CHATLIST_HANDLER = CommandHandler("fedchats", fed_chats, pass_args=True)
-
+MY_SUB_FED = CommandHandler("fedsubs", get_myfedsubs, pass_args=True)
+MY_FEDS_LIST = CommandHandler("myfeds", get_myfeds_list)
 DELETEBTN_FED_HANDLER = CallbackQueryHandler(del_fed_button, pattern=r"rmfed_")
 
 dispatcher.add_handler(NEW_FED_HANDLER)
@@ -901,5 +967,6 @@ dispatcher.add_handler(FED_CHAT_HANDLER)
 dispatcher.add_handler(FED_ADMIN_HANDLER)
 # dispatcher.add_handler(FED_NOTIF_HANDLER)
 # dispatcher.add_handler(FED_CHATLIST_HANDLER)
-
+dispatcher.add_handler(MY_SUB_FED)
+dispatcher.add_handler(MY_FEDS_LIST)
 dispatcher.add_handler(DELETEBTN_FED_HANDLER)
