@@ -122,6 +122,14 @@ antiflood_help: |
   Available commands are:
   - /flood: gets the current antiflood settings.
   - /setflood <number/off>: sets the number of messages at which to take action on a user.
+  - /setfloodmode <ban/kick/mute/tban/tmute> <value>: Action to perform when user have exceeded flood limit. ban/kick/mute/tmute/tban
+  - Note: 
+    - Value must be filled for tban and tmute!!
+  It can be:
+  `5m` = 5 minutes
+  `6h` = 6 hours
+  `3d` = 3 days
+  `1w` = 1 week
 #Antispam
 modname_global_bans: Antispam
 global_bans_help: |
