@@ -136,12 +136,11 @@ def start(bot: Bot, update: Update, args: List[str]):
         except Exception:
             print("Nut")
 
-
 def send_start(bot, update):
     chat = update.effective_chat
 
     # chat = update.effective_chat and unused variable
-    text = tld(chat.id, 'main_start_pm')
+    text = tld(chat.id, 'main_start_pm').format(update.effective_user.first_name)
 
     keyboard = [[
         InlineKeyboardButton(text=tld(chat.id, 'main_add_group_btn'),

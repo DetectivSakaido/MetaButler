@@ -14,12 +14,8 @@ btn_go_back: Back
 main_start_group: Hey there! I'm alive ;)
 
 main_start_pm: |
-  Hey there! My name is MetaButler - I'm here to help you manage your groups!
-  Click Help button to find out more about how to use me to my full potential.
-
-  Join [the bot support group](https://t.me/MetaButler) if you need any bot support or help.
-
-  Follow [MetaButlerNews](https://t.me/metabutlernews) if you want to keep up with the bot news, bot updates and bot downtime!
+  Hey {} My name is MetaButler - I'm here to help you manage your groups!
+  Click Help button or use command /help to find out more about how to use me.
 
 main_start_btn_support: '📢 Support Group'
 main_start_btn_ctrlpnl: '🛠 Control panel'
