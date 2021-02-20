@@ -17,15 +17,13 @@ main_start_pm: |
   Hey there! My name is MetaButler - I'm here to help you manage your groups!
   Click Help button to find out more about how to use me to my full potential.
 
-  Join [the bot support group](https://t.me/MetaButlerSupport) ( @MetaButlerSupport ) if you need any bot support or help.
+  Join [the bot support group](https://t.me/MetaButler) if you need any bot support or help.
 
-  Follow [MetaButlerNews](https://t.me/metabutlernews) ( @metabutlernews ) if you want to keep up with the bot news, bot updates and bot downtime!
-
-  To add me to your group? [Click here!](t.me/MetaButlerBot?startgroup=true)
+  Follow [MetaButlerNews](https://t.me/metabutlernews) if you want to keep up with the bot news, bot updates and bot downtime!
 
 main_start_btn_support: '📢 Support Group'
 main_start_btn_ctrlpnl: '🛠 Control panel'
-main_start_btn_lang: '🇺🇸 Language'
+main_add_group_btn: '☑ Add MetaButler to Your Group'
 #Common
 common_err_no_admin: You aren't an admin!
 common_err_no_user: You don't seem to be referring to a user.

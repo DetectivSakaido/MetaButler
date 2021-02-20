@@ -144,12 +144,12 @@ def send_start(bot, update):
     text = tld(chat.id, 'main_start_pm')
 
     keyboard = [[
-        InlineKeyboardButton(text=tld(chat.id, 'main_start_btn_support'),
-                             url="https://t.me/MetaButlerSupport")
+        InlineKeyboardButton(text=tld(chat.id, 'main_add_group_btn'),
+                             url="t.me/{}?startgroup=true".format(bot.username)),
     ]]
     keyboard += [[
-        InlineKeyboardButton(text=tld(chat.id, 'main_start_btn_lang'),
-                             callback_data="set_lang_"),
+        InlineKeyboardButton(text=tld(chat.id, 'main_start_btn_support'),
+                             url="https://t.me/MetaButler"),
         InlineKeyboardButton(text=tld(chat.id, 'btn_help'),
                              callback_data="help_back")
     ]]
