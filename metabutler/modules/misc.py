@@ -337,7 +337,10 @@ def ud(bot: Bot, update: Update):
         text = "Cockblocked By Steve Jobs"
     results = get(
         f'http://api.urbandictionary.com/v0/define?term={text}').json()
-    reply_text = f'Word: {text}\nDefinition: {results["list"][0]["definition"]}'
+    try:
+        reply_text = f'Word: {text}\nDefinition: {results["list"][0]["definition"]}'
+    except:
+        reply_text = "Oops can't find that."
     message.reply_text(reply_text)
 
 
