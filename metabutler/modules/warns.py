@@ -349,7 +349,6 @@ def list_warn_filters(bot: Bot, update: Update):
 
 
 @run_async
-@loggable
 def reply_filter(bot: Bot, update: Update) -> str:
     chat = update.effective_chat
     message = update.effective_message
