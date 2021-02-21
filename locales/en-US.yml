@@ -15,7 +15,7 @@ btn_go_back: Back
 main_start_group: Hey there! I'm alive ;)
 
 main_start_pm: |
-  Hey {} My name is MetaButler - I'm here to help you manage your groups!
+  Hey {} My name is MetaButler.\nI'm here to help you manage your groups!
   Send /help to find out more about how to use me.
 
 main_start_btn_support: '📢 Support Group'
@@ -633,7 +633,7 @@ misc_info_name: "\nLast Name: {}"
 misc_info_username: "\nUsername: @{}"
 misc_info_user_link: "\nUser link: {}\n"
 misc_info_is_owner: "\nThis person is my owner! They have total power over me."
-misc_info_is_original_owner: "\nThis person is my creator, beginning of me, though he abandoned my original, sister Marie, already :("
+misc_info_is_original_owner: "\nThis person is my Owner"
 misc_info_is_sudo: "\nThis person is one of my sudo users!"
 misc_info_is_support: "\nThis person is one of my support users!"
 misc_info_is_whitelisted: "\nThis person is one of my whitelisted user, one rarely gets this role, you can't ban or kick him."
