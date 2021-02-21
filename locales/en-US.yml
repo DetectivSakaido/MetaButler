@@ -10,12 +10,13 @@ here_is_help: Here is some help for the *{}* module:\n\n{}
 help_not_found: Help string for <code>{}</code> not found!
 help_pm_only: Contact me in PM to get the list of possible commands.
 btn_help: '❔ Help'
+btn_news: 'Metabutler News'
 btn_go_back: Back
 main_start_group: Hey there! I'm alive ;)
 
 main_start_pm: |
   Hey {} My name is MetaButler - I'm here to help you manage your groups!
-  Click Help button or use command /help to find out more about how to use me.
+  Send /help to find out more about how to use me.
 
 main_start_btn_support: '📢 Support Group'
 main_start_btn_ctrlpnl: '🛠 Control panel'

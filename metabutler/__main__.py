@@ -11,6 +11,8 @@ from telegram.error import (Unauthorized, BadRequest, TimedOut, NetworkError,
                             ChatMigrated, TelegramError)
 from telegram.ext import CommandHandler, Filters, MessageHandler, CallbackQueryHandler
 from telegram.ext.dispatcher import run_async, DispatcherHandlerStop, Dispatcher
+from telegram.utils.helpers import mention_html
+from telegram.utils.helpers import escape_markdown
 
 # Needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
@@ -29,10 +31,12 @@ DATA_EXPORT = []
 
 GDPR = []
 
+METABUTLER_IMG = "https://telegra.ph/file/888b20d2f85e53d692ebd.jpg"
 importlib.import_module("metabutler.modules.tr_engine.language")
 
 for module_name in ALL_MODULES:
-    imported_module = importlib.import_module("metabutler.modules." + module_name)
+    imported_module = importlib.import_module(
+        "metabutler.modules." + module_name)
     modname = imported_module.__name__.split('.')[2]
 
     if not modname.lower() in IMPORTED:
@@ -72,7 +76,8 @@ def get_readable_time(seconds: int) -> str:
 
     while count < 4:
         count += 1
-        remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
+        remainder, result = divmod(
+            seconds, 60) if count < 3 else divmod(seconds, 24)
         if seconds == 0 and remainder == 0:
             break
         time_list.append(int(result))
@@ -136,52 +141,28 @@ def start(bot: Bot, update: Update, args: List[str]):
         except Exception:
             print("Nut")
 
+
 def send_start(bot, update):
     chat = update.effective_chat
-
     # chat = update.effective_chat and unused variable
-    text = tld(chat.id, 'main_start_pm').format(update.effective_user.first_name)
-
-    keyboard = [[
-        InlineKeyboardButton(text=tld(chat.id, 'main_add_group_btn'),
-                             url="t.me/{}?startgroup=true".format(bot.username)),
-    ]]
-    keyboard += [[
-        InlineKeyboardButton(text=tld(chat.id, 'main_start_btn_support'),
-                             url="https://t.me/MetaButler"),
-        InlineKeyboardButton(text=tld(chat.id, 'btn_help'),
-                             callback_data="help_back")
-    ]]
-
-    try:
-        query = update.callback_query
-        # query.message.delete()
-        bot.edit_message_text(chat_id=query.message.chat_id,
-                              message_id=query.message.message_id,
-                              text=text,
-                              parse_mode=ParseMode.MARKDOWN,
-                              reply_markup=InlineKeyboardMarkup(keyboard),
-                              disable_web_page_preview=True)
-    except Exception:
-        pass
-
-    if query:
-        try:
-            bot.edit_message_text(chat_id=query.message.chat_id,
-                                  message_id=query.message.message_id,
-                                  text=text,
-                                  parse_mode=ParseMode.MARKDOWN,
-                                  reply_markup=InlineKeyboardMarkup(keyboard),
-                                  disable_web_page_preview=True)
-        except Exception:
-            return
-    else:
-        update.effective_message.reply_text(
-            text,
-            reply_markup=InlineKeyboardMarkup(keyboard),
-            parse_mode=ParseMode.MARKDOWN,
-            disable_web_page_preview=True)
-
+    update.effective_message.reply_photo(
+        photo=METABUTLER_IMG,
+        caption=tld(chat.id, 'main_start_pm').format(
+            update.effective_user.first_name),
+        parse_mode=ParseMode.MARKDOWN,
+        reply_markup=InlineKeyboardMarkup(
+            [[
+                InlineKeyboardButton(text=tld(chat.id, 'main_add_group_btn'),
+                                     url="t.me/{}?startgroup=true".format(bot.username)),
+            ],
+                [
+                InlineKeyboardButton(text=tld(chat.id, 'main_start_btn_support'),
+                                     url="https://t.me/MetaButler"),
+                InlineKeyboardButton(text=tld(chat.id, 'btn_news'),
+                                     url="https://t.me/metabutlernews")
+            ],
+            ]
+        ))
 
 # for test purposes
 def error_callback(bot, update, error):
@@ -300,7 +281,7 @@ def get_help(bot: Bot, update: Update):
 
         update.effective_message.reply_text(tld(
             chat.id, "help_not_found").format(args[1]),
-                                            parse_mode=ParseMode.HTML)
+            parse_mode=ParseMode.HTML)
         return
 
     send_help(

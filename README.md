@@ -1,6 +1,6 @@
 #MetaButler
 
-![](images/metabutler.jpg)
+![](images/metabutler.jpeg)
 
 
 MetaButler is an open source Telegram group manager bot, this is a modular based 
