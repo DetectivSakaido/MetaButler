@@ -2,6 +2,7 @@
 
 ![](images/metabutler.jpeg)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b0e835cca7ff466a9da38ec7c826d1df)](https://app.codacy.com/gh/destroyer19991/MetaButler?utm_source=github.com&utm_medium=referral&utm_content=destroyer19991/MetaButler&utm_campaign=Badge_Grade_Settings)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/5af21077123c4a3f9818d860fe66f18a)](https://www.codacy.com/gh/destroyer19991/MetaButler/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=destroyer19991/MetaButler&amp;utm_campaign=Badge_Grade)
 
 MetaButler is an open source Telegram group manager bot, this is a modular based
