@@ -14,6 +14,7 @@ strict_gban: True
 workers: 4
 del_cmds: False
 sw_api: ''
+
 # Database
 database_url: "postgres://username:password@host:5432/database_name"
 
@@ -26,6 +27,5 @@ SUPPORT_CHAT:
 SPAMWATCH_SUPPORT_CHAT: "@SpamWatchSupport"
 
 EVENT_LOGS:
-INFOPIC: "True"
 
 
