@@ -6,7 +6,7 @@
 MetaButler is an open source Telegram group manager bot, this is a modular based
 Telegram Python Bot running on Python3 with sqlalchmey database.
 
-This bot can be found and used on telegram as [MetaButler](https: // t.me/MetaButlerBot).
+This bot can be found and used on telegram as [MetaButler](https://t.me/MetaButlerBot).
 
 
 # Installation
@@ -35,7 +35,7 @@ fill out all the required information
 
 # How can I obtain `bot_token`?
 
-Just talk to[BotFather](https: // t.me/BotFather)(described[here](https: // core.telegram.org/bots  # 6-botfather))
+Just talk to[BotFather](https://t.me/BotFather)(described[here](https://core.telegram.org/bots#6-botfather))
 and follow a few simple steps. Once you've created a bot and received your
 authorization token, that's it! that's your `bot_token`.
 
@@ -44,7 +44,7 @@ authorization token, that's it! that's your `bot_token`.
 In order to obtain an API key and hash you need to do the following:
 
  - Sign up for Telegram using any application.
- - Login to your Telegram core: [https://my.telegram.org](https: // my.telegram.org).
+ - Login to your Telegram core: [https://my.telegram.org](https://my.telegram.org).
  - Go to '[API Development tools](https://my.telegram.org/apps)' and fill out the form.
  - You will get basic addresses as well as the `api_id` and `api_hash` parameters
    required for Metabutler's configuration file.
@@ -85,7 +85,7 @@ By default, YOUR_HOST should be 0.0.0.0: 5432.
 
 You should now be able to build your database URI. This will be:
 
-`sqldbtype: // username: pw@hostname: port/db_name`
+`sqldbtype://username:pw@hostname:port/db_name`
 
 Replace sqldbtype with whichever db youre using(eg postgres, mysql, sqllite, etc)
 repeat for your username, password, hostname(localhost?), port(5432?), and db name.
@@ -106,5 +106,5 @@ repeat for your username, password, hostname(localhost?), port(5432?), and db na
 # Thanks to
  - RealAkito - Haruka Aya Owner
  - AnimeKaizoku - SaitamaRobot' owner
- - [SoapDev](https: // github.com/SoapDev2018)
+ - [SoapDev](https://github.com/SoapDev2018)
  - And much more that we couldn't list it here!
