@@ -2,6 +2,7 @@
 
 ![](images/metabutler.jpeg)
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/5af21077123c4a3f9818d860fe66f18a)](https://www.codacy.com/gh/destroyer19991/MetaButler/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=destroyer19991/MetaButler&amp;utm_campaign=Badge_Grade)
 
 MetaButler is an open source Telegram group manager bot, this is a modular based
 Telegram Python Bot running on Python3 with sqlalchmey database.
@@ -12,7 +13,7 @@ This bot can be found and used on telegram as [MetaButler](https://t.me/MetaButl
 # Installation
 
 First what you want to do is prepare the configuration file for Metabutler, copy
-[sample_config.yml](sample_config.yml) to[config.yml](config.yml) and begin to
+[sample_config.yml](sample_config.yml) to [config.yml](config.yml) and begin to
 fill out all the required information
 
 | Name                     | Required | Description                                                                                                                                         |
@@ -35,7 +36,7 @@ fill out all the required information
 
 # How can I obtain `bot_token`?
 
-Just talk to[BotFather](https://t.me/BotFather)(described[here](https://core.telegram.org/bots#6-botfather))
+Just talk to[BotFather](https://t.me/BotFather)(described [here](https://core.telegram.org/bots#6-botfather))
 and follow a few simple steps. Once you've created a bot and received your
 authorization token, that's it! that's your `bot_token`.
 
