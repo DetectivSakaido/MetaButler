@@ -11,7 +11,7 @@ This bot can be found and used on telegram as [MetaButler](https://t.me/MetaButl
 
 ## Installation
 
-First what you want to do is prepare the configuration file for Haruka Aya, copy
+First what you want to do is prepare the configuration file for Metabutler, copy
 [sample_config.yml](sample_config.yml) to [config.yml](config.yml) and begin to
 fill out all the required information
 
