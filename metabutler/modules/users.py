@@ -199,6 +199,7 @@ def __stats__():
 def __migrate__(old_chat_id, new_chat_id):
     sql.migrate_chat(old_chat_id, new_chat_id)
 
+__mod_name__ = "Users"
 
 BROADCAST_HANDLER = CommandHandler("broadcast",
                                    broadcast,

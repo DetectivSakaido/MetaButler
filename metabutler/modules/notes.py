@@ -91,7 +91,7 @@ def get(bot, update, notename, show_none=True, no_format=False):
                 sql.rm_note(chat_id, notename)
 
             else:
-                raise
+                raise ValueError('A very specific bad thing happened')
     else:
         if note:
             text = note.value

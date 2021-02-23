@@ -115,7 +115,7 @@ def info(bot: Bot, update: Update, args: List[str]):
             result = result.json()["result"]
             if "custom_title" in result.keys():
                 custom_title = result["custom_title"]
-                text += f"\nThis user holds the title <b>{custom_title}</b> here."
+                text += f"\nTitle: <b>{custom_title}</b>"
     except BadRequest:
         pass
 
@@ -126,6 +126,17 @@ def info(bot: Bot, update: Update, args: List[str]):
     elif user.id in WHITELIST_USERS:
         text += tld(chat.id, "misc_info_is_whitelisted")
 
+    for mod in USER_INFO:
+        if mod.__mod_name__ == "Users":
+            continue
+
+        try:
+            mod_info = mod.__user_info__(user.id)
+        except TypeError:
+            mod_info = mod.__user_info__(user.id, chat.id)
+        if mod_info:
+            text += "\n" + mod_info
+            
     if INFOPIC:
         try:
             profile = bot.get_user_profile_photos(user.id).photos[0][-1]

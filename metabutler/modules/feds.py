@@ -1049,17 +1049,17 @@ def __user_info__(user_id, chat_id):
         infoname = info['fname']
 
         if int(info['owner']) == user_id:
-            text = "This user is the owner of the current Federation: <b>{}</b>.".format(
+            text = "Federation Owner: <b>{}</b>.".format(
                 infoname)
         elif is_user_fed_admin(fed_id, user_id):
-            text = "This user is the admin of the current Federation: <b>{}</b>.".format(
+            text = "Federation Admin: <b>{}</b>.".format(
                 infoname)
 
         elif fban:
-            text = "Banned in the current Federation: <b>Yes</b>"
+            text = "Banned in Federation: <b>Yes</b>"
             text += "\n<b>Reason:</b> {}".format(fbanreason)
         else:
-            text = "Banned in the current Federation: <b>No</b>"
+            text = "Banned in Federation: <b>No</b>"
     else:
         text = ""
     return text
@@ -1085,6 +1085,8 @@ def get_chat(chat_id, chat_data):
 
 
 __help__ = True
+
+__mod_name__ = "Federations"
 
 NEW_FED_HANDLER = CommandHandler("newfed", new_fed, pass_args=True)
 DEL_FED_HANDLER = CommandHandler("delfed", del_fed, pass_args=True)
