@@ -13,7 +13,7 @@ no_load: []
 strict_gban: True
 workers: 4
 del_cmds: False
-sw_api: ''
+sw_api: 'dAsbHWPfYv1Q2HoQSV6pm96Z_9vOZdHPCO34p0t7miR2O8tdPsCfr61NT8ZSssXJ'
 
 # Database
 database_url: "postgres://erjhtlua:x_R50Rh-usUHg2f97-1-JVOAvBFxclEn@ziggy.db.elephantsql.com:5432/erjhtlua" #sw# Permission
