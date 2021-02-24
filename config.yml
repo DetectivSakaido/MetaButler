@@ -2,12 +2,12 @@
 # Please edit this line to "not_sample_anymore" to make the bot run
 not_sample_anymore: "Ahhhhhhhhhhh i am not blind so i'll follow what the line above me asked"
 ##############################
-bot_token: "Your bot token"
-api_key: ''
-api_hash: ''
-owner_id: 123456
-owner_username: "OWNER USERNAME"
-message_dump: "CHAT ID"
+bot_token: "1570223191:AAHJYX8VIbfLJMxlgLKdtaNGqrtVwIdWsV4"
+api_key: '1798019'
+api_hash: '1c2c4f9d372bdb22958807b17bc33966'
+owner_id: 1387988065
+owner_username: "OtakuDxD"
+message_dump: "-1001191458830"
 load: []
 no_load: []
 strict_gban: True
@@ -16,9 +16,7 @@ del_cmds: False
 sw_api: ''
 
 # Database
-database_url: "postgres://username:password@host:5432/database_name"
-
-# Permission
+database_url: "postgres://erjhtlua:x_R50Rh-usUHg2f97-1-JVOAvBFxclEn@ziggy.db.elephantsql.com:5432/erjhtlua" #sw# Permission
 sudo_users: []
 whitelist_users: []
 
