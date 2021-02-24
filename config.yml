@@ -1,6 +1,6 @@
 ##############################
 # Please edit this line to "not_sample_anymore" to make the bot run
-is_example_config_or_not: "Ahhhhhhhhhhh i am not blind so i'll follow what the line above me asked"
+not_sample_anymore: "Ahhhhhhhhhhh i am not blind so i'll follow what the line above me asked"
 ##############################
 bot_token: "Your bot token"
 api_key: ''
